@@ -1,13 +1,13 @@
-data <- read_lines("/cloud/project/data/Lithobates pipiens/Lithobates pipiens_LP1-A.txt", skip=1)
+data <- read_lines("/cloud/project/data/Lithobates pipiens/Lithobates pipiens_LP1-A.txt", skip = 1) 
+ncols = match('pop', data)-1
+loci_id=rev(data[1:(ncols+1)])
 
-range<-length(data)
-for (i in 1:range)
-{
-  if (data[i]=='pop'){
-    loci_id=data[1:(i-1)]
-  }
+f <- read.delim("/cloud/project/data/Lithobates pipiens/Lithobates pipiens_LP1-A.txt", header=TRUE)
+for (i in 1:nrow(f)){
+  f[i,]=sub("," , "" , f[i,])
+  f[i,]=str_squish(f[i,])
 }
-loci_id <- append(loci_id, "sample_id", after = 0)
-str(loci_id)
-tidytable
-
+f <- f %>% 
+  slice(n = ncols+2:nrow(f)) %>% 
+  separate(colnames(f[1]),into= loci_id, sep=" ")
+f
