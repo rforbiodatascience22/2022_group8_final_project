@@ -1,5 +1,5 @@
 A1 <-function (string){
-  A_1 <- (str_match(string, "^\\d{3}"))
+  A_1 <- (substr(string,0,(str_length(string)/2)))
   return(A_1)
 }
 A2 <-function (string){
@@ -7,36 +7,23 @@ A2 <-function (string){
   return(A_2)
 }
 
-
+  
+name1 <-function (name){
+  new_name <- paste(name,'A1')
+  return(new_name)
+}
+name2 <-function (name){
+  new_name <- paste(name, 'A2')
+  return(new_name)
+}
 
 
 ff <- f %>% select(-pop)
 
-
-fff1 <- mutate (ff, tet)
-
-ff2 <- ff %>% mutate_all (A2)
 ff1 <- ff %>% mutate_all (A1)
+ff2 <- ff %>% mutate_all (A2)
+
+ff1 <- rename_with(ff1, name1)
+ff2 <- rename_with(ff2, name2)
 
 
-
-
-##### junk
-df <- df %>% 
-  mutate(func=tet(marker,f))
-
-
-      
-df <- header %>%
-  as_tibble_col(column_name = 'marker') %>%
-  filter(marker != 'pop')
-
-
-vac <- ff %>% select(header)
-
-vac <- vac %>% mutate('A_1'=substr(Rpi108,0,3), 'A_2'=substr(Rpi108,4,str_length(Rpi108)))
-
-fff<-ff %>%
-  tibble::rownames_to_column() %>%  
-  pivot_longer(-rowname) %>% 
-  pivot_wider(names_from=rowname, values_from=value)
