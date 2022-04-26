@@ -12,8 +12,3 @@ for (i in 1:nrow(f)){
 f <- f %>% 
   slice(n = ncols+2:nrow(f)) %>% 
   separate(colnames(f[1]),into= loci_id, sep=" ")
-
-
-header <- loci_id
-
-
