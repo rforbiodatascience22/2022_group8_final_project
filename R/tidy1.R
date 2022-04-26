@@ -14,4 +14,6 @@ f <- f %>%
   separate(colnames(f[1]),into= loci_id, sep=" ")
 
 
-header <= loci_id
+header <- loci_id
+
+
