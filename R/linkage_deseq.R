@@ -1,8 +1,7 @@
-divide_alleles <-function (string){
-  if (length(string)==2){
-    
-  }
-  if (length(string)==3){
+divide_alleles <-function(string){
+  if (str_length(string[[1]])==4){
+    alleles <- (str_match_all(string, "\\d{2}"))
+  }else if (str_length(string[[1]])==6){
     alleles <- (str_match_all(string, "\\d{3}"))
   }
   return(alleles)
