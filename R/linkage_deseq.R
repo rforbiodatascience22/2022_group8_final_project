@@ -15,19 +15,35 @@ freq_function <- function(unique, total){
       freq <- freq + 1
     }
   }
-  freq <- freq/length(total)
+  freq <- freq/length(total[[1]])
   return(freq)
 }
 
 homo_freq_function <- function(unique, pairs){
   freq <- 0
   for (i in pairs[[1]]){
-    if (i[[1]]==unique && i[[2]]==unique){
+    if (i[[1]]==unique & i[[2]]==unique){
       freq <- freq + 1
     }
   }
-  freq <- freq/length(pairs)
+  freq <- freq/length(pairs[[1]])
   return(freq)
+}
+
+x_vector_function <- function(unique, pairs){
+  x <- c()
+  for (i in pairs[[1]]){
+    if (i[[1]]=='000'){
+      x <- append(x,'none')
+    } else if (i[[1]]==unique & i[[2]]==unique){
+      x <- append(x,-1)
+    } else if ((i[[1]]==unique & i[[2]]!=unique) | (i[[1]]!=unique & i[[2]]==unique)){
+      x <- append(x,0)
+    } else if (i[[1]]!=unique & i[[2]]!=unique){
+      x <- append(x,1)
+    }
+  }
+  return(x)
 }
 
 div_f <- f %>%
@@ -67,4 +83,6 @@ df_loci_tidy <- df_loci %>%
   mutate(k=n()) %>%                                        #add number of unique alleles per locus
   group_by(unique_alleles,locus) %>%
   mutate(freq=freq_function(unique_alleles,total_alleles), #add total allele frequencies 
-         h=homo_freq_function(unique_alleles,allele_pairs)) #add homozygote frequencies
+         h=homo_freq_function(unique_alleles,allele_pairs), #add homozygote frequencies
+         x=list(x_vector_function(unique_alleles,allele_pairs))) %>% #add x vector with allele info
+  select(-total_alleles,-allele_pairs)
