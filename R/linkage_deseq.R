@@ -1,10 +1,34 @@
 divide_alleles <-function (string){
-  alleles <- (str_match_all(string, "\\d{3}"))
+  if (length(string)==2){
+    
+  }
+  if (length(string)==3){
+    alleles <- (str_match_all(string, "\\d{3}"))
+  }
   return(alleles)
 }
 
-n_indiv <- f %>%
-  summarise(n())
+freq_function <- function(unique, total){
+  freq <- 0
+  for (i in total[[1]]){
+    if (unique==i){
+      freq <- freq + 1
+    }
+  }
+  freq <- freq/length(total)
+  return(freq)
+}
+
+homo_freq_function <- function(unique, pairs){
+  freq <- 0
+  for (i in pairs[[1]]){
+    if (i[[1]]==unique && i[[2]]==unique){
+      freq <- freq + 1
+    }
+  }
+  freq <- freq/length(pairs)
+  return(freq)
+}
 
 div_f <- f %>%
   mutate(across(!pop,divide_alleles))
@@ -22,9 +46,9 @@ for (locus in loci_id){
     total_alleles <- total_alleles[! total_alleles %in% "000"]
     unique_alleles <- total_alleles %>%
       unique
-    allele_pairs_list=c(allele_pairs_list,allele_pairs)
-    total_alleles_list=c(total_alleles_list,list(total_alleles))
-    unique_alleles_list=c(unique_alleles_list,list(unique_alleles))
+    allele_pairs_list <- c(allele_pairs_list,allele_pairs)
+    total_alleles_list <- c(total_alleles_list,list(total_alleles))
+    unique_alleles_list <- c(unique_alleles_list,list(unique_alleles))
   }
 }
 
@@ -36,8 +60,11 @@ df_loci <- loci_id %>%
          total_alleles=total_alleles_list,
          allele_pairs=allele_pairs_list)
 
+
 df_loci_tidy <- df_loci %>%
   unnest(unique_alleles) %>%
   group_by(locus) %>%
-  mutate(k=n(),
-         freq=count(unique_alleles,total_alleles)/(n_indivs*2))
+  mutate(k=n()) %>%                                        #add number of unique alleles per locus
+  group_by(unique_alleles,locus) %>%
+  mutate(freq=freq_function(unique_alleles,total_alleles), #add total allele frequencies 
+         h=homo_freq_function(unique_alleles,allele_pairs)) #add homozygote frequencies
