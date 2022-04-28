@@ -7,7 +7,6 @@ A2 <-function (string){
   return(A_2)
 }
 
-  
 name1 <-function (name){
   new_name <- paste(name,'A1')
   return(new_name)
@@ -69,3 +68,16 @@ tidy <- tidy %>%
 
 tidy <- tidy %>% 
   mutate (freq = n/total_Al)
+
+
+comparsion<-(ff1==ff2)
+
+homo <-function (string){
+  A_1 <- nest(ff1,ff2) 
+  return(A_1)
+}
+
+print(ff1[1,1])
+print(map(ff1))
+
+
