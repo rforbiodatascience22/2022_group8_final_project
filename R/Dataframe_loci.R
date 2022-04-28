@@ -6,7 +6,7 @@ A2 <-function (string){
   A_2 <- (substr(string,(str_length(string)/2)+1,(str_length(string))))
   return(A_2)
 }
-
+##
 name1 <-function (name){
   new_name <- paste(name,'A1')
   return(new_name)
