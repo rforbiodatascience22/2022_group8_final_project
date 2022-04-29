@@ -80,6 +80,23 @@ r_AB_function <- function(i,j,A,B,delta_AB){
   return(r_AB)
 }
 
+n_ij_function <- function(i,j){
+  ki <- df_loci_tidy %>%
+    select(locus,k) %>%
+    distinct %>%
+    filter(locus==i) %>%
+    pull(k)
+  kj <- df_loci_tidy %>%
+    select(locus,k) %>%
+    distinct %>%
+    filter(locus==j) %>%
+    pull(k)
+  
+  n_ij <- (ki-1)*(kj-1)
+  return(n_ij)
+}
+
+
 
 df_combi <- df_loci %>%
   select(locus) %>%
@@ -98,6 +115,7 @@ df_combi <- df_loci %>%
 df_combi_tidy <- df_combi %>%
   group_by(i,j) %>%
   mutate(r_ij=mean(r_AB)) %>%
-  nest(allele_combinations=c(A,B,delta_AB,r_AB)) #%>%
-  #select(-allele_combinations)
-  
+  select(-A,-B,-delta_AB,-r_AB) %>%
+  distinct %>%
+  mutate(n_ij=n_ij_function(i,j),
+         w_ij=n_ij*(S_ij**2))
