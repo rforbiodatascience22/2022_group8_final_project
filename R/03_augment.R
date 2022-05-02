@@ -4,3 +4,5 @@ merged_df <- read_tsv("data/otu_clean.tsv") %>%
   pivot_wider(id_cols = SampleID, names_from = family, values_from = count) %>%
   rename(Unknown="NA") %>%
   full_join(x=read_tsv("data/map_clean.tsv"), by = "SampleID")
+
+write_tsv(merged_df, "data/otu_map_merged.tsv")
