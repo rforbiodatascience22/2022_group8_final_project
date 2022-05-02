@@ -1,11 +1,11 @@
-## CFU COUNTS FILE
+## Read CFU counts file
 cfu_df <- read_csv("_raw/cfu_counts.csv") %>%
   as_tibble
 
 write_tsv(cfu_df, file='data/cfu.tsv')
 
 
-## MAP FILE
+## Read mapping file
 map_df_cols <- read_lines("_raw/mapfile.txt",n_max=1) %>%
   str_split("\\t",simplify = TRUE)
 
@@ -16,7 +16,7 @@ map_df <- read_lines("_raw/mapfile.txt",skip=1,skip_empty_rows = TRUE) %>%
 write_tsv(map_df, file='data/map.tsv')  
  
 
-## OTU FILE 
+## Read OTU counts file
 otu_df_cols <- read_lines("_raw/otufile.txt",n_max=1) %>%
   str_split("\\t",simplify = TRUE)
 
