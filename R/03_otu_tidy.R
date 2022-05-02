@@ -4,5 +4,6 @@ data <- read_tsv("data/otu.tsv") %>%
   separate(col = `Consensus Lineage`, into = c('realm', 'phylum', 'class', 'order', 'family', 'genus', 'species'), sep = ';' ) %>% 
   select(-c(`#OTU ID`, genus, species, phylum, realm, class, order)) %>% 
   group_by(family) %>%
-  summarise(!family,sum)
+  summarise_all(sum)
 data
+?summarise_all
