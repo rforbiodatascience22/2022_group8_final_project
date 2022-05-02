@@ -1,6 +1,7 @@
 cfu_df <- read_csv("_raw/cfu_counts.csv") %>%
   as_tibble
-  
+
+write_tsv(otu_df, file='data/cfu.tsv')  
   
 map_df_cols <- read_lines("_raw/mapfile.txt",n_max=1) %>%
   str_split("\\t",simplify = TRUE)
