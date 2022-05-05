@@ -30,7 +30,9 @@ otu_df
 ## Tidying the data
 
 The main tidying issue was with the *otufile* file. In that file observations were introduced as columns, and the "family" variable had to be separated from the rest of the taxa. After that the OTU variable had to be removed and group the obserbations by family.
+
 ```{r, echo = FALSE, message = FALSE}
 otu_df_clean
 ```
 
+## Data visualization
