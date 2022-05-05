@@ -13,8 +13,6 @@ ggplot(data = violin_1_A,
              position = position_dodge(width = 0.75)) +
   scale_y_log10() 
 
-  
-
 
 
 
