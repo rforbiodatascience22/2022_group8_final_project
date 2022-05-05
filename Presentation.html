@@ -363,14 +363,16 @@ pre code {
 
 <div id="group-8-final-project" class="section level1">
 <h1>Group 8 final project</h1>
-<p>Authors: Enrique Martinez, Bernat Godayol, Paula Molina, Sergio
-Esteban, Jakob Larsen.</p>
-<div id="ntroduction" class="section level2">
-<h2>ntroduction</h2>
+<p>Authors: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina
+Polls, Sergio Esteban Echeverría, Niels Jakob Larsen.</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 <p>This project used data from the 2020 paper from (authors) about gut
 microbiota populations in patients inoculated with a specific <em>E.
-coli</em> strain and then treated with two diferent antibiotics. ## The
-data</p>
+coli</em> strain and then treated with two diferent antibiotics.</p>
+</div>
+<div id="loading-the-data" class="section level2">
+<h2>Loading the data</h2>
 <p>The data was stored in 3 diferent files:</p>
 <ul>
 <li><strong>ctu_counts</strong>: A .csv file containing information
@@ -416,14 +418,6 @@ sequencing and experimental information for each sample.</li>
 <li><strong>otufile</strong>: OTU abundance and taxonomic identification
 file.</li>
 </ul>
-<pre class="r"><code>otu_df_cols &lt;- read_lines(&quot;_raw/otufile.txt&quot;,n_max=1) %&gt;%
-  str_split(&quot;\\t&quot;,simplify = TRUE)
-
-otu_df &lt;- read_lines(&quot;_raw/otufile.txt&quot;,skip=1,skip_empty_rows = TRUE) %&gt;%
-  as_tibble_col(column_name = &quot;lines&quot;) %&gt;%
-  separate(lines,otu_df_cols,sep=&quot;\\t&quot;)
-
-otu_df</code></pre>
 <pre><code>## # A tibble: 1,090 × 32
 ##    `#OTU ID` A01   A02   A03   A04   A05   A06   A07   A08   A09   A10   A11  
 ##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -445,6 +439,27 @@ otu_df</code></pre>
 </div>
 <div id="tidying-the-data" class="section level2">
 <h2>Tidying the data</h2>
+<p>The main tidying issue was with the <em>otufile</em> file. In that
+file observations were introduced as columns, and the “family” variable
+had to be separated from the rest of the taxa. After that the OTU
+variable had to be removed and group the obserbations by family.</p>
+<pre><code>## # A tibble: 48 × 31
+##    family        A01   A02   A03   A04   A05   A06   A07   A08   A09   A10   A11
+##    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 &quot; &quot;         13581  4081 28527 13345  4569  2842  7308  2701  4301 13060 22182
+##  2 &quot; Acidamin… 13831  3793 13659  9191  6129  4727 10213 12989 14167  7113 10701
+##  3 &quot; Actinomy…    18    46    15    14   101   103    17    18    17    11    15
+##  4 &quot; Alcalige…  8389  2290 17144 11580   132    81  6625  4750  7568  5974  8439
+##  5 &quot; Bacillac…     0     0     0     0     0     0     0     0     0     0     0
+##  6 &quot; Bacteroi… 28476  5924 22146 18337  5660  4390 28008 22533 34467 13651 23544
+##  7 &quot; Bacteroi…     5     3     5     2     4     1     1     2     1     6     1
+##  8 &quot; Bifidoba… 42209  4157 33330 28812  9081  6857 29342 46979 51073 14236 20349
+##  9 &quot; Brachysp…     6    10     1     2    11    14     4    12     5     5     3
+## 10 &quot; Christen…  3048  5918  2406  1501  9877  7991  3484  3958  4745  1892  2721
+## # … with 38 more rows, and 19 more variables: A12 &lt;dbl&gt;, A13 &lt;dbl&gt;, A14 &lt;dbl&gt;,
+## #   A15 &lt;dbl&gt;, A16 &lt;dbl&gt;, A17 &lt;dbl&gt;, A18 &lt;dbl&gt;, A19 &lt;dbl&gt;, A20 &lt;dbl&gt;,
+## #   A21 &lt;dbl&gt;, A22 &lt;dbl&gt;, A23 &lt;dbl&gt;, A24 &lt;dbl&gt;, A25 &lt;dbl&gt;, A26 &lt;dbl&gt;,
+## #   A27 &lt;dbl&gt;, A28 &lt;dbl&gt;, A29 &lt;dbl&gt;, A30 &lt;dbl&gt;</code></pre>
 </div>
 </div>
 

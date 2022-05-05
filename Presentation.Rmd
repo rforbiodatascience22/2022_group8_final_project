@@ -1,45 +1,36 @@
 # Group 8 final project
-Authors: Enrique Martinez, Bernat Godayol, Paula Molina, Sergio Esteban, Jakob Larsen.
+Authors: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina Polls, Sergio Esteban Echeverría, Niels Jakob Larsen.
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(ggplot2)
-library(tidyverse)
+source(file = "/cloud/project/R/00_doit.R")
 ```
-## ntroduction
+
+## Introduction
 
 This project used data from the 2020 paper from (authors) about gut microbiota populations in patients inoculated with a specific *E. coli* strain and then treated with two diferent antibiotics.
-## The data
+
+## Loading the data
 
 The data was stored in 3 diferent files:
 
 *   **ctu_counts**: A .csv file containing information about the abundance of *E. coli* for each treatment.
 
 ```{r, echo = FALSE, message = FALSE}
-raw_cfu_counts <- read_csv("_raw/cfu_counts.csv")
-raw_cfu_counts
+cfu_df
 ```
 *   **mapfile**: Metadata mapping file containing sequencing and experimental information for each sample.
 ```{r, echo = FALSE, message = FALSE}
-map_df_cols <- read_lines("_raw/mapfile.txt",n_max=1) %>%
-  str_split("\\t",simplify = TRUE)
-
-map_df <- read_lines("_raw/mapfile.txt", skip=1, skip_empty_rows = TRUE) %>%
-  as_tibble_col(column_name = "lines") %>%
-  separate(lines,map_df_cols,sep="\\t")
-
 map_df
 ```
 *   **otufile**: OTU abundance and taxonomic identification file.
-```{r}
-otu_df_cols <- read_lines("_raw/otufile.txt",n_max=1) %>%
-  str_split("\\t",simplify = TRUE)
-
-otu_df <- read_lines("_raw/otufile.txt",skip=1,skip_empty_rows = TRUE) %>%
-  as_tibble_col(column_name = "lines") %>%
-  separate(lines,otu_df_cols,sep="\\t")
-
+```{r, echo = FALSE, message = FALSE}
 otu_df
 ```
 
 ## Tidying the data
+
+The main tidying issue was with the *otufile* file. In that file observations were introduced as columns, and the "family" variable had to be separated from the rest of the taxa. After that the OTU variable had to be removed and group the obserbations by family.
+```{r, echo = FALSE, message = FALSE}
+otu_df_clean
+```
+
