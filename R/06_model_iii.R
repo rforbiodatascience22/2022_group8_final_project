@@ -1,4 +1,4 @@
-violin_1_A <- read_tsv("data/cfu_clean.tsv") %>%
+violin_1_A <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
   select(c(Donor, Community, Antibiotic, Replicate, cfu_ml))
 
 violin_1_B <- filter_at(violin_1_A, vars(cfu_ml), all_vars((.) != 0))

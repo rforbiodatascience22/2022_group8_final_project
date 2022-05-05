@@ -1,7 +1,7 @@
 # Run all scripts ---------------------------------------------------------
-source(file = "R/01_load.R")
-source(file = "R/02_clean.R")
-source(file = "R/03_augment.R")
-source(file = "R/04_model_i.R")
-source(file = "R/04_model_ii.R")
-source(file = "R/04_model_iii.R")
+source("R/01_load.R")
+source("R/02_clean.R")
+source("R/03_augment.R")
+source("R/04_model_i.R")
+source("R/05_model_ii.R")
+source("R/06_model_iii.R")
