@@ -5,4 +5,4 @@ merged_df <- read_tsv("data/otu_clean.tsv", show_col_types = FALSE) %>%
   rename(Unknown="NA") %>%
   full_join(x=read_tsv("data/map_clean.tsv"), by = "SampleID")
 
-write_tsv(merged_df, "data/otu_map_merged.tsv", show_col_types = FALSE)
+write_tsv(merged_df, "data/otu_map_merged.tsv")
