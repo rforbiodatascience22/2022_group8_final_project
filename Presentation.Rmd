@@ -1,0 +1,45 @@
+# Group 8 final project
+Authors: Enrique Martinez, Bernat Godayol, Paula Molina, Sergio Esteban, Jakob Larsen.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tidyverse)
+```
+## ntroduction
+
+This project used data from the 2020 paper from (authors) about gut microbiota populations in patients inoculated with a specific *E. coli* strain and then treated with two diferent antibiotics.
+## The data
+
+The data was stored in 3 diferent files:
+
+*   **ctu_counts**: A .csv file containing information about the abundance of *E. coli* for each treatment.
+
+```{r, echo = FALSE, message = FALSE}
+raw_cfu_counts <- read_csv("_raw/cfu_counts.csv")
+raw_cfu_counts
+```
+*   **mapfile**: Metadata mapping file containing sequencing and experimental information for each sample.
+```{r, echo = FALSE, message = FALSE}
+map_df_cols <- read_lines("_raw/mapfile.txt",n_max=1) %>%
+  str_split("\\t",simplify = TRUE)
+
+map_df <- read_lines("_raw/mapfile.txt", skip=1, skip_empty_rows = TRUE) %>%
+  as_tibble_col(column_name = "lines") %>%
+  separate(lines,map_df_cols,sep="\\t")
+
+map_df
+```
+*   **otufile**: OTU abundance and taxonomic identification file.
+```{r}
+otu_df_cols <- read_lines("_raw/otufile.txt",n_max=1) %>%
+  str_split("\\t",simplify = TRUE)
+
+otu_df <- read_lines("_raw/otufile.txt",skip=1,skip_empty_rows = TRUE) %>%
+  as_tibble_col(column_name = "lines") %>%
+  separate(lines,otu_df_cols,sep="\\t")
+
+otu_df
+```
+
+## Tidying the data
