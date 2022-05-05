@@ -1,3 +1,6 @@
+#Load libraries
+library(tidyverse)
+
 ## Read CFU counts file
 cfu_df <- read_csv("_raw/cfu_counts.csv", show_col_types = FALSE) %>%
   as_tibble

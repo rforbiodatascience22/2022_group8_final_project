@@ -1,3 +1,7 @@
+#Load libraries
+library(tidyverse)
+library(patchwork)
+
 data <- cfu_df_clean
 p1 <- ggplot(data, 
              mapping = aes(x = Antibiotic, 

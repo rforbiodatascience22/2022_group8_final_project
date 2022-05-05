@@ -1,3 +1,6 @@
+#Load libraries
+library(tidyverse)
+
 violin_1_A <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
   select(c(Donor, Community, Antibiotic, Replicate, cfu_ml))
 
