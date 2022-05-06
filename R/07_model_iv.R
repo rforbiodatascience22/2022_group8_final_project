@@ -33,8 +33,9 @@ NMDS_coords <- NMDS_ord[["points"]] %>%
 
 
 ggplot(data = NMDS_coords,
-       aes(x = MDS1, y = MDS2)) +
-  geom_point(size=2, alpha=0.8, aes(label=family))
+       aes(x = MDS1, y = MDS2, label=family)) +
+  geom_point(size=2, alpha=0.8) + 
+  geom_text_repel()
 
 
 
