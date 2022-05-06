@@ -1,9 +1,3 @@
-install.packages("vegan")             
-install.packages("ggrepel")
-library("vegan")
-library("ggrepel")
-
-
 NMDS_three <- read_tsv("data/otu.tsv")
 NMDS_three_meta <- read_tsv("data/map.tsv")
 
@@ -28,9 +22,4 @@ ggplot(data = NMDS_coords,
        aes(x = MDS1, y = MDS2, shape = factor(Donor), label = Name)) +
   geom_point(size=1.5, alpha= 0.5) + 
   geom_text_repel()
-
-
-
-
-
 
