@@ -18,8 +18,9 @@ NMDS_coords <- NMDS_ord[["points"]] %>%
   left_join(NMDS_three_meta)
 
 
-ggplot(data = NMDS_coords,
+NMDS_plot <- ggplot(data = NMDS_coords,
        aes(x = MDS1, y = MDS2, shape = factor(Donor), label = Name)) +
   geom_point(size=1.5, alpha= 0.5) + 
   geom_text_repel()
 
+ggsave("results/NMDS_plot.png")
