@@ -3259,7 +3259,7 @@ slide:not(.current) .plotly.html-widget{
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
 
 <ul>
-<li><strong>ctu_counts</strong>: A .csv file containing information about the abundance of <em>E. coli</em> for each treatment.</li>
+<li><em>ctu_counts</em></li>
 </ul>
 
 <pre >## # A tibble: 54 × 6
@@ -3280,7 +3280,7 @@ slide:not(.current) .plotly.html-widget{
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
 
 <ul>
-<li><strong>mapfile</strong>: Metadata mapping file containing sequencing and experimental information for each sample.</li>
+<li><em>mapfile</em></li>
 </ul>
 
 <pre >## # A tibble: 30 × 21
@@ -3305,7 +3305,7 @@ slide:not(.current) .plotly.html-widget{
 </article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
 
 <ul>
-<li><strong>otufile</strong>: OTU abundance and taxonomic identification file.</li>
+<li><em>otufile</em></li>
 </ul>
 
 <pre >## # A tibble: 1,090 × 32
@@ -3331,7 +3331,32 @@ slide:not(.current) .plotly.html-widget{
 
 <h3>Tidying the data</h3>
 
-<p>The main tidying issue was with the <em>otufile</em> file. In that file observations were introduced as columns, and the &ldquo;family&rdquo; variable had to be separated from the rest of the taxa. After that the OTU variable had to be removed and group the obserbations by family.</p>
+<h4><em>cfu_counts</em></h4>
+
+<p><font size = "3"> In order to process this data for visualization, the <em>Treatment</em> column mentioned earlier had to be spliced in 3 new columns for the contained variables <em>Donor</em>, <em>community</em>, and <em>Antibiotic</em> as it follows: </font></p>
+
+<pre >## # A tibble: 54 × 7
+##    plateID Donor Community Antibiotic Replicate Dilution     cfu_ml
+##      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+##  1       1 1     -         -                  1 22000000  440000000
+##  2       2 1     -         -                  2 17600000  352000000
+##  3       3 1     -         -                  3 12400000  248000000
+##  4       4 1     -         R                  1 71200000 1424000000
+##  5       5 1     -         R                  2 59200000 1184000000
+##  6       6 1     -         R                  3 51200000 1024000000
+##  7       7 1     -         P                  1 10600000  212000000
+##  8       8 1     -         P                  2 18000000  360000000
+##  9       9 1     -         P                  3 17200000  344000000
+## 10      10 1     +         -                  1   300000    6000000
+## # … with 44 more rows</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
+
+<h3>Tidying the data</h3>
+
+<h4><em>otufile</em></h4>
+
+<p><font size="3"> Data from <em>mapfile</em> was already tidy, but data from <em>otufile</em> had to be modified, in order to group all observations by family. </font></p>
 
 <pre >## # A tibble: 48 × 31
 ##    family        A01   A02   A03   A04   A05   A06   A07   A08   A09   A10   A11
@@ -3350,6 +3375,35 @@ slide:not(.current) .plotly.html-widget{
 ## #   A15 &lt;dbl&gt;, A16 &lt;dbl&gt;, A17 &lt;dbl&gt;, A18 &lt;dbl&gt;, A19 &lt;dbl&gt;, A20 &lt;dbl&gt;,
 ## #   A21 &lt;dbl&gt;, A22 &lt;dbl&gt;, A23 &lt;dbl&gt;, A24 &lt;dbl&gt;, A25 &lt;dbl&gt;, A26 &lt;dbl&gt;,
 ## #   A27 &lt;dbl&gt;, A28 &lt;dbl&gt;, A29 &lt;dbl&gt;, A30 &lt;dbl&gt;</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
+
+<h3>Tidying the data</h3>
+
+<h4><em>mapfile</em> and <em>otufile</em> merging (augmented data)</h4>
+
+<p><font size="3"> Prior to do relevant visualizations, data from the <em>mapfile</em> and <em>otufile</em> had to be combined. Now that variables in <em>otufile</em> were properly grouped, observations were transposed so we had a row for each of them, and then data could be ,erged as it follows: </font></p>
+
+<pre >## # A tibble: 30 × 56
+##    SampleID Index1 Index2 Sample_descripti… Donor Antibiotic Time  Name  Unknown
+##    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1 A01      N722   S513   D2CA3                 2 none       24h   None…   13581
+##  2 A02      N722   S517   D2CAR1                2 Rifampicin 24h   Rifa…    4081
+##  3 A03      N721   S513   D2CA1                 2 none       24h   None…   28527
+##  4 A04      N722   S521   D2CA2                 2 none       24h   None…   13345
+##  5 A05      N721   S520   D2CAR2                2 Rifampicin 24h   Rifa…    4569
+##  6 A06      N719   S517   D2CAR3                2 Rifampicin 24h   Rifa…    2842
+##  7 A07      N719   S521   D2CAP1                2 Polymyxin  24h   Poly…    7308
+##  8 A08      N718   S513   D2CAP2                2 Polymyxin  24h   Poly…    2701
+##  9 A09      N718   S522   D2CAP3                2 Polymyxin  24h   Poly…    4301
+## 10 A10      N716   S513   D1CA1                 1 none       24h   None…   13060
+## # … with 20 more rows, and 47 more variables: Acidaminococcaceae &lt;dbl&gt;,
+## #   Actinomycetaceae &lt;dbl&gt;, Alcaligenaceae &lt;dbl&gt;, Bacillaceae &lt;dbl&gt;,
+## #   Bacteroidaceae &lt;dbl&gt;, `Bacteroidales_S24-7_group` &lt;dbl&gt;,
+## #   Bifidobacteriaceae &lt;dbl&gt;, Brachyspiraceae &lt;dbl&gt;, Christensenellaceae &lt;dbl&gt;,
+## #   Clostridiaceae_1 &lt;dbl&gt;, Clostridiales_vadinBB60_group &lt;dbl&gt;,
+## #   Comamonadaceae &lt;dbl&gt;, Coriobacteriaceae &lt;dbl&gt;, Corynebacteriaceae &lt;dbl&gt;,
+## #   Defluviitaleaceae &lt;dbl&gt;, Desulfovibrionaceae &lt;dbl&gt;, …</pre>
 
 </article></slide><slide class=""><hgroup><h2>Data visualization</h2></hgroup><article  id="data-visualization">
 
