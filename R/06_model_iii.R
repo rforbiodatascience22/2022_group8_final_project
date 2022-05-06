@@ -1,4 +1,4 @@
-violin_1_A <- read_tsv("data/cfu_clean.tsv") %>%
+violin_1_A <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
   select(c(Donor, Community, Antibiotic, Replicate, cfu_ml)) %>%
   mutate(cfu_ml = na_if(cfu_ml, 0) ) %>%
   drop_na()

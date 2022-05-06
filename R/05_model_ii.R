@@ -1,6 +1,6 @@
 library(patchwork)
 
-model_ii_data <- read_tsv("data/cfu_clean.tsv") %>% 
+model_ii_data <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>% 
   select(!c(plateID, Replicate, Dilution))
 
 

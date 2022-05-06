@@ -10,7 +10,7 @@ write_tsv(cfu_df_clean, file='data/cfu_clean.tsv')
 
 ## Clean mapfile dataframe
 map_df_clean <- read_tsv("data/map.tsv", show_col_types = FALSE) %>%
-  select(-c(Experiment,Platform,CycleKit,RunDate,Project,Treat,Description),-contains("Sequence")) %>%
+  select(-c(Experiment,Platform,CycleKit,RunDate,Project,Treat),-contains("Sequence"),-contains("Index"),-contains("escription")) %>%
   mutate(Donor=str_remove(Donor, "HumanDonor"))
 
 write_tsv(map_df_clean, file='data/map_clean.tsv')
