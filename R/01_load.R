@@ -1,4 +1,11 @@
+# Checking and installing needed libraries:
+packages <- c("tidyverse", "vegan", "ggrepel")
+install.packages(setdiff(packages, rownames(installed.packages()))) 
+
+# Loading libraries 
 library(tidyverse)
+library(vegan)
+library(ggrepel)
 
 ## Read CFU counts file
 cfu_df <- read_csv("_raw/cfu_counts.csv", show_col_types = FALSE) %>%
