@@ -115,6 +115,11 @@ knitr::include_graphics("results/violin_1_A.png")
 
 --- 
 
+```{r fig4, echo=FALSE, out.width="600px", fig.align="center"}
+knitr::include_graphics("results/NMDS_plot.png")
+```
+
+--- 
 ### General visualization of data from the *cfu* file
 
 *   Wrangling the data:
