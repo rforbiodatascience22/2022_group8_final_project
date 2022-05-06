@@ -13,4 +13,18 @@ ggplot(data = cfu,
   labs(y = "Cells / nL")
              
              
-             
+library("vegan")
+
+NMDS_ord <- otu_df_clean %>%
+  select(-family) %>%
+  filter(!row_number() %in% 
+           c(37,42,45)) %>%
+  metaMDS(k=2)
+
+row <- otu_df_clean %>%
+  select(family) %>%
+  filter(!row_number() %in% 
+           c(37,42,45))
+
+NMDS_coords <- NMDS_ord[["points"]] %>%
+  as_tibble(rownames = row) 
