@@ -11,34 +11,3 @@ ggplot(data = cfu,
                            group = Donor),
              position = position_dodge(width = 0.4)) +
   labs(y = "Cells / nL")
-             
-install.packages("vegan")             
-install.packages("ggrepel")
-library("vegan")
-library("ggrepel")
-NMDS_ord <- otu_df_clean %>%
-  select(-family) %>%
-  filter(!row_number() %in% 
-           c(37,42,45)) %>%
-  metaMDS(k=2)
-
-row <- otu_df_clean %>%
-  select(family) %>%
-  filter(!row_number() %in% 
-           c(37,42,45)) %>%
-  as_tibble()
-
-NMDS_coords <- NMDS_ord[["points"]] %>%
-  as_tibble() %>%
-  mutate(row)
-
-
-ggplot(data = NMDS_coords,
-       aes(x = MDS1, y = MDS2, label=family)) +
-  geom_point(size=2, alpha=0.8) + 
-  geom_text_repel()
-
-
-
-
-
