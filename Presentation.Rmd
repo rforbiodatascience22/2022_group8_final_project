@@ -1,5 +1,13 @@
+---
+title: "Group 8 final project"
+authors: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina Polls, Sergio Esteban Echeverría, Niels Jakob Larsen
+date: March 22, 2005
+output:
+  ioslides_presentation:
+    theme: cerulean
+---
 # Group 8 final project
-Authors: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina Polls, Sergio Esteban Echeverría, Niels Jakob Larsen.
+
 
 ```{r setup, include=FALSE}
 source(file = "/cloud/project/R/00_doit.R")
@@ -9,25 +17,41 @@ source(file = "/cloud/project/R/00_doit.R")
 
 This project used data from the 2020 paper from (authors) about gut microbiota populations in patients inoculated with a specific *E. coli* strain and then treated with two diferent antibiotics.
 
-## Loading the data
+## Materials and methods
 
-The data was stored in 3 diferent files:
+This project used data from the 2020 paper from (authors). The data provided by the authors was stored into 3 different files: 
+
+*   **ctu_counts**: A .csv file containing information about the abundance of *E. coli* for each treatment.
+
+*   **mapfile**: Metadata mapping file containing sequencing and experimental information for each sample.
+
+*   **otufile**: OTU abundance and taxonomic identification file.
+
+---
 
 *   **ctu_counts**: A .csv file containing information about the abundance of *E. coli* for each treatment.
 
 ```{r, echo = FALSE, message = FALSE}
 cfu_df
 ```
+
+---
+
 *   **mapfile**: Metadata mapping file containing sequencing and experimental information for each sample.
 ```{r, echo = FALSE, message = FALSE}
 map_df
 ```
+
+---
+
 *   **otufile**: OTU abundance and taxonomic identification file.
 ```{r, echo = FALSE, message = FALSE}
 otu_df
 ```
 
-## Tidying the data
+---
+
+### Tidying the data
 
 The main tidying issue was with the *otufile* file. In that file observations were introduced as columns, and the "family" variable had to be separated from the rest of the taxa. After that the OTU variable had to be removed and group the obserbations by family.
 
@@ -38,6 +62,12 @@ otu_df_clean
 ## Data visualization
 
 The resulting plots obtained from this data consisted in a heatmap to visualize the abundance of each family of baceria in the different subjects, with the different treatments, some violin plots, boxplots and barplots as described next in more detail.
+
+```{r figura refacherita, echo=FALSE, out.width="600px", fig.align="center"}
+knitr::include_graphics("general_plot.png")
+```
+
+
 
 ### General visualization of data from the *cfu* file
 

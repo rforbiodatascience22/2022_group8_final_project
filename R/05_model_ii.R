@@ -23,4 +23,5 @@ p3 <- ggplot(model_ii_data) +
   facet_wrap(~Donor)
 
 general_plot <- p3 | (p1 / p2)
-general_plot  
+
+ggsave("general_plot.png")  
