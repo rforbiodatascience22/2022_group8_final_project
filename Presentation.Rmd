@@ -73,6 +73,7 @@ Data from *mapfile* was already tidy, but data from *otufile* had to be modified
 </font>
 
 ```{r, echo = FALSE, message = FALSE}
+options(width = 50)
 otu_df_clean
 ```
 
@@ -90,14 +91,29 @@ merged_df
 ```
 
 ## Data visualization
-
+<font size="3">
 The resulting plots obtained from this data consisted in a heatmap to visualize the abundance of each family of baceria in the different subjects, with the different treatments, some violin plots, boxplots and barplots as described next in more detail.
+</font>
 
-```{r figura refacherita, echo=FALSE, out.width="600px", fig.align="center"}
-knitr::include_graphics("general_plot.png")
+---
+
+```{r fig1, echo=FALSE, out.width="600px", fig.align="center"}
+knitr::include_graphics("results/general_plot.png")
 ```
 
+---
 
+```{r fig2, echo=FALSE, out.width="600px", fig.align="center"}
+knitr::include_graphics("results/heatmap.png")
+```
+
+---
+
+```{r fig3, echo=FALSE, out.width="600px", fig.align="center"}
+knitr::include_graphics("results/violin_1_A.png")
+```
+
+--- 
 
 ### General visualization of data from the *cfu* file
 

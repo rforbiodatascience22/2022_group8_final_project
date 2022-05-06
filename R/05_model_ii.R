@@ -24,4 +24,4 @@ p3 <- ggplot(model_ii_data) +
 
 general_plot <- p3 | (p1 / p2)
 
-ggsave("general_plot.png")  
+ggsave("results/general_plot.png")  

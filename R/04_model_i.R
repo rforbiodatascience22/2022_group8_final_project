@@ -1,3 +1,6 @@
+library(tidyverse)
+library(patchwork)
+
 #families <- c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,Bifidobacteriaceae,Clostridiaceae,Erysipelotrichaceae,Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae)
 
 heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
@@ -63,4 +66,4 @@ h3 <- heat_map_data_3 %>%
 
 heat_map <- h1 | h2 | h3
 
-heat_map
+ggsave("results/heatmap.png")
