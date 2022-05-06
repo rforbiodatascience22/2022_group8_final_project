@@ -24,7 +24,19 @@ NMDS_ord <- otu_df_clean %>%
 row <- otu_df_clean %>%
   select(family) %>%
   filter(!row_number() %in% 
-           c(37,42,45))
+           c(37,42,45)) %>%
+  as_tibble()
 
 NMDS_coords <- NMDS_ord[["points"]] %>%
-  as_tibble(rownames = row) 
+  as_tibble() %>%
+  mutate(row)
+
+
+ggplot(data = NMDS_coords,
+       aes(x = MDS1, y = MDS2)) +
+  geom_point(size=2, alpha=0.8, aes(label=family))
+
+
+
+
+
