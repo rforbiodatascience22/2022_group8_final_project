@@ -1,6 +1,6 @@
 library(patchwork)
 
-model_ii_data <- read_tsv("data/cfu_clean.tsv") %>% 
+model_ii_data <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>% 
   select(!c(plateID, Replicate, Dilution))
 
 
@@ -24,4 +24,4 @@ p3 <- ggplot(model_ii_data) +
 
 general_plot <- p3 | (p1 / p2)
 
-ggsave("general_plot.png")  
+ggsave("results/general_plot.png")  
