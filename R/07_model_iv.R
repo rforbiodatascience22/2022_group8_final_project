@@ -12,9 +12,10 @@ ggplot(data = cfu,
              position = position_dodge(width = 0.4)) +
   labs(y = "Cells / nL")
              
-             
+install.packages("vegan")             
+install.packages("ggrepel")
 library("vegan")
-
+library("ggrepel")
 NMDS_ord <- otu_df_clean %>%
   select(-family) %>%
   filter(!row_number() %in% 
