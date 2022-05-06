@@ -8,6 +8,8 @@ heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,Bifidobacteriaceae,Clostridiaceae,Erysipelotrichaceae,Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae),
                names_to = "family",
                values_to = "counts") %>%
+  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%
+  mutate(family=fct_reorder(family,counts,sum)) %>%
   mutate(Antibiotic = case_when(Time == "0h" ~ "0h",
                                 Antibiotic == "none" ~ "AB free",
                                 Antibiotic == "Polymyxin" ~ "Poly",
@@ -37,7 +39,7 @@ h1 <- heat_map_data_1 %>%
                        low = "#336699",
                        high = "#FF3300", 
                        mid = "orange",
-                       midpoint = 2.9,
+                       midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
   theme(plot.title = element_text(size = 10, hjust = 0.5),
@@ -57,7 +59,7 @@ h2 <- heat_map_data_2 %>%
   scale_fill_gradient2(name = "Abundance (%)",
                        low = "#336699",
                        high = "#FF3300",
-                       mid = "orange", midpoint = 2.9,
+                       mid = "orange", midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
   theme(plot.title = element_text(size = 10, hjust = 0.5),
@@ -80,7 +82,7 @@ h3 <- heat_map_data_3 %>%
                        low = "#336699",
                        high = "#FF3300",
                        mid = "orange",
-                       midpoint = 2.9,
+                       midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
   theme(plot.title = element_text(size = 10, hjust = 0.5),
