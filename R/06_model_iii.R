@@ -33,7 +33,6 @@ violin_1_A <- ggplot(data = violin_1_A_data,
        x = "Treatment",
        y = "Abundance (CFU mL-1)")
   
-
 violin_1_A
 ggsave("results/violin_1_A.png")
 
