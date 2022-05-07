@@ -1,25 +1,26 @@
 library(tidyverse)
 library(patchwork)
 
-# Take data from the merged dataframe  
+# Take data from the merged dataframe
 heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   rename(Clostridiaceae=Clostridiaceae_1) %>%
-  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       # add a "family" and a "count" columns
+  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       
                  Bifidobacteriaceae,Clostridiaceae,Erysipelotrichaceae,
                  Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae), 
                names_to = "family",
                values_to = "counts") %>%
-  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         # select the columns are going to be used 
-  mutate(family=fct_reorder(family,counts,sum)) %>%                                        # 
-  mutate(Antibiotic = case_when(Time == "0h" ~ "0h",
+  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%
+  mutate(family=fct_reorder(family,counts,sum)) %>%                                         
+  mutate(Antibiotic = case_when(Time == "0h" ~ "I",
                                 Antibiotic == "none" ~ "AB free",
                                 Antibiotic == "Polymyxin" ~ "Poly",
                                 Antibiotic == "Rifampicin" ~ "Rif"),
-                                Replicate = str_extract(Name, "\\d")) %>%
+         Replicate = str_extract(Name, "\\d"),
+         Antibiotic = fct_relevel(Antibiotic, "I", "AB free", "Poly", "Rif")) %>%
   group_by(SampleID) %>%
   mutate(counts_perc = 100*counts/sum(counts))
 
-#Create 3 separate plots, as we don't know how to make 2 nested facets
+# Create 3 separate plots, as we don't know how to make 2 nested facets
 h1 <- heat_map_data %>%
   filter(Donor==1) %>%
   ggplot(mapping = aes(Replicate, family)) +
@@ -36,11 +37,13 @@ h1 <- heat_map_data %>%
                        midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
-  theme(plot.title = element_text(size = 10, hjust = 0.5),
+  theme(plot.title = element_text(size = 2, hjust = 0.5),
+        axis.text.y=element_text(size = 6),
         axis.text.x=element_blank(),
         legend.position = "none",
         panel.spacing = unit(0, "lines"),
-        panel.grid.major = element_blank())
+        panel.grid.major = element_blank(),
+        strip.text = element_text(size = 6))
 
 h2 <- heat_map_data %>%
   filter(Donor==2) %>%
@@ -57,13 +60,14 @@ h2 <- heat_map_data %>%
                        mid = "orange", midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
-  theme(plot.title = element_text(size = 10, hjust = 0.5),
+  theme(plot.title = element_text(size = 2, hjust = 0.5),
         axis.text.x=element_blank(),
         axis.text.y=element_blank(),
         legend.position = "none",
         panel.spacing = unit(0, "lines"),
         plot.margin = margin(r=0, l=0),
-        panel.grid.major = element_blank())
+        panel.grid.major = element_blank(),
+        strip.text = element_text(size = 6))
 
 h3 <- heat_map_data %>%
   filter(Donor==3) %>%
@@ -81,13 +85,23 @@ h3 <- heat_map_data %>%
                        midpoint = 3,
                        trans = "pseudo_log",
                        limits = c(0,75)) +
-  theme(plot.title = element_text(size = 10, hjust = 0.5),
+  theme(plot.title = element_text(size = 2, hjust = 0.5),
         axis.text.x=element_blank(),
         axis.text.y=element_blank(),
         panel.spacing = unit(0, "lines"),
-        panel.grid.major = element_blank())
+        panel.grid.major = element_blank(),
+        strip.text = element_text(size = 6),
+        legend.title = element_text(size=8), #change legend title font size
+        legend.text = element_text(size=8),
+        strip.text.y = element_text(size = 6)) #change legend text font size)
 
-#Merge plots with patchworks and save the final plot as .png
-heat_map <- h1 | h2 | h3
+# Merge plots with patchworks and save the final plot as .png
+heat_map <- h1 | h2 | h3 
+heat_map + plot_annotation(
+  title = 'Community response to antibiotic treatments',
+  caption = 'Data obtained from https://doi.org/10.1038/s41396-021-00929-7.') &
+  theme(plot.title = element_text(size = 10),
+        axis.title = element_text(size = 8),
+        plot.caption = element_text(size = 5))
 
 ggsave("results/heatmap.png")
