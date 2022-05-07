@@ -8,7 +8,7 @@ library(vegan)
 library(ggrepel)
 library(BiocManager)
 library(scales)
-BiocManager::install("phyloseq")
+#BiocManager::install("phyloseq")
 
 ## CFU counts file 
 
