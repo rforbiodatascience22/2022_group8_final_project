@@ -20,7 +20,9 @@ write_tsv(map_df_clean, file='data/map_clean.tsv')
 otu_df_clean <- read_tsv("data/otu.tsv", show_col_types = FALSE) %>%
   mutate(`Consensus Lineage` = str_remove_all(`Consensus Lineage`, "[a-z]_{2}")) %>% 
   separate(col = `Consensus Lineage`, into = c('realm', 'phylum', 'class', 'order', 'family', 'genus', 'species'), sep = ';' ) %>% 
-  select(-c(`#OTU ID`, genus, species, phylum, realm, class, order)) %>% 
+  select(-c(`#OTU ID`, genus, species, phylum, realm, class, order)) %>%
+  rowwise() %>%
+  filter(sum(across(matches("A\\d\\d")))>=5) %>%
   group_by(family) %>%
   summarise_all(sum)
 
