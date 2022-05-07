@@ -1,7 +1,7 @@
 library(tidyverse)
 library(patchwork)
 
-# Take data from the merged dataframe  
+# Take data from the merged dataframe
 heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   rename(Clostridiaceae=Clostridiaceae_1) %>%
   pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       
@@ -9,17 +9,14 @@ heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
                  Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae), 
                names_to = "family",
                values_to = "counts") %>%
-<<<<<<< HEAD
-  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         # select the columns are going to be used 
-=======
-  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         
->>>>>>> 6ba6c135fd39ff56daba09e8e24f10583de24827
+  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%
   mutate(family=fct_reorder(family,counts,sum)) %>%                                         
-  mutate(Antibiotic = case_when(Time == "0h" ~ "0h",
+  mutate(Antibiotic = case_when(Time == "0h" ~ "I",
                                 Antibiotic == "none" ~ "AB free",
                                 Antibiotic == "Polymyxin" ~ "Poly",
                                 Antibiotic == "Rifampicin" ~ "Rif"),
-                                Replicate = str_extract(Name, "\\d")) %>%
+         Replicate = str_extract(Name, "\\d"),
+         Antibiotic = fct_relevel(Antibiotic, "I", "AB free", "Poly", "Rif")) %>%
   group_by(SampleID) %>%
   mutate(counts_perc = 100*counts/sum(counts))
 
@@ -47,6 +44,7 @@ h1 <- heat_map_data %>%
         panel.spacing = unit(0, "lines"),
         panel.grid.major = element_blank(),
         strip.text = element_text(size = 6))
+
 h2 <- heat_map_data %>%
   filter(Donor==2) %>%
   ggplot(mapping = aes(Replicate, family)) +
@@ -98,16 +96,12 @@ h3 <- heat_map_data %>%
         strip.text.y = element_text(size = 6)) #change legend text font size)
 
 # Merge plots with patchworks and save the final plot as .png
-<<<<<<< HEAD
 heat_map <- h1 | h2 | h3 
 heat_map + plot_annotation(
   title = 'Community response to antibiotic treatments',
-  caption = 'Data obtained from https://doi.org/10.1038/s41396-021-00929-7.') & 
+  caption = 'Data obtained from https://doi.org/10.1038/s41396-021-00929-7.') &
   theme(plot.title = element_text(size = 10),
         axis.title = element_text(size = 8),
         plot.caption = element_text(size = 5))
-=======
-heat_map <- h1 | h2 | h3
->>>>>>> 6ba6c135fd39ff56daba09e8e24f10583de24827
 
 ggsave("results/heatmap.png")
