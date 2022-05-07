@@ -4,12 +4,16 @@ library(patchwork)
 # Take data from the merged dataframe  
 heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   rename(Clostridiaceae=Clostridiaceae_1) %>%
-  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       # add a "family" and a "count" columns
+  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       
                  Bifidobacteriaceae,Clostridiaceae,Erysipelotrichaceae,
                  Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae), 
                names_to = "family",
                values_to = "counts") %>%
+<<<<<<< HEAD
   select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         # select the columns are going to be used 
+=======
+  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         
+>>>>>>> 6ba6c135fd39ff56daba09e8e24f10583de24827
   mutate(family=fct_reorder(family,counts,sum)) %>%                                         
   mutate(Antibiotic = case_when(Time == "0h" ~ "0h",
                                 Antibiotic == "none" ~ "AB free",
@@ -19,7 +23,7 @@ heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   group_by(SampleID) %>%
   mutate(counts_perc = 100*counts/sum(counts))
 
-#Create 3 separate plots, as we don't know how to make 2 nested facets
+# Create 3 separate plots, as we don't know how to make 2 nested facets
 h1 <- heat_map_data %>%
   filter(Donor==1) %>%
   ggplot(mapping = aes(Replicate, family)) +
@@ -94,6 +98,7 @@ h3 <- heat_map_data %>%
         strip.text.y = element_text(size = 6)) #change legend text font size)
 
 # Merge plots with patchworks and save the final plot as .png
+<<<<<<< HEAD
 heat_map <- h1 | h2 | h3 
 heat_map + plot_annotation(
   title = 'Community response to antibiotic treatments',
@@ -101,5 +106,8 @@ heat_map + plot_annotation(
   theme(plot.title = element_text(size = 10),
         axis.title = element_text(size = 8),
         plot.caption = element_text(size = 5))
+=======
+heat_map <- h1 | h2 | h3
+>>>>>>> 6ba6c135fd39ff56daba09e8e24f10583de24827
 
 ggsave("results/heatmap.png")
