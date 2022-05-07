@@ -15,7 +15,11 @@ source(file = "/cloud/project/R/00_doit.R")
 
 ## Introduction
 
-This project used data from the 2020 paper from (authors) about gut microbiota populations in patients inoculated with a specific *E. coli* strain and then treated with two diferent antibiotics.
+<font size = "3">
+It is known that the use of broad-spectrum antibiotics can promote the spread of resistant strains by competition. A previous study by Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al. (2021) analysed the competitive suppression of a resistant strain of *E. coli* inoculated into human gut-microbiota populations within the presence and absence of rifampicin and polymyxin B.
+
+The samples of gut microbiota used for the analysis were collected from 3 healthy human donors and inoculated with the resistant *E.coli* and the antibiotics. A 24h incubation in anaerobic conditions was proceeded and focal strain density and total biomass were measured via colony counting and flow cytometry, and community composition and diversity were analysed via 16S rRNA sequencing.
+</font>
 
 ## Materials and methods
 
