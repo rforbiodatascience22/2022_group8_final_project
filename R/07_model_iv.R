@@ -1,30 +1,41 @@
 library(phyloseq)
 
-cfu <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
-  #filter (Community == "+") %>%
-  select(c(Donor, Antibiotic, cfu_ml)) %>%
-  mutate(cfu_nl = cfu_ml*1e-6)
-
-otu <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
-  rowwise %>%
-  mutate(sum=sum(across(-c(SampleID,Donor,Antibiotic,Time,Name)))) %>%
-  select(c(SampleID,Donor,Antibiotic,Name,Time,sum))
-  #mutate(cfu_nl = cfu_ml*1e-6)
-
-#Calculate richness
-read_tsv("data/otu.tsv", show_col_types = FALSE) %>%
-  select(-c("#OTU ID","Consensus Lineage")) %>%
+model_iv_data <- read_tsv("data/otu.tsv", show_col_types = FALSE) %>%
+  select(-c(`#OTU ID`,`Consensus Lineage`)) %>%
   rowwise() %>%
-  filter(sum(across(matches("A\\d\\d")))>=5) %>%
+  filter(sum(across(matches("A\\d{2}")))>=5)
+
+#Calculate abundance
+abundance_df <- model_iv_data %>%
+  pivot_longer(matches("A\\d{2}"), names_to = "SampleID", values_to = "count") %>%
+  group_by(SampleID) %>%
+  mutate(abundance=sum(count)) %>%
+  select(c(SampleID,abundance)) %>%
+  distinct
+  
+
+#Calculate richness with phyloseq package (requires to turn to base R for 3 lines)
+richness_df <- model_iv_data %>%
   as.matrix %>%
   otu_table(T) %>%
-  estimate_richness(measures=c("Observed"))
+  estimate_richness(measures=c("Observed")) %>%
+  as_tibble(rownames = "SampleID") %>%
+  rename(richness=Observed)
 
-ggplot(data = cfu,
-       mapping = aes(x = Antibiotic,
-                     y = cfu_nl)) +
-  geom_violin(mapping = aes(fill = Antibiotic)) +
-  geom_point(mapping = aes(shape = factor(Donor),
-                           group = Donor),
-             position = position_dodge(width = 0.4)) +
-  labs(y = "Cells / nL")
+
+#Calculate Shannon Index
+shannon_df <- model_iv_data %>%
+  pivot_longer(matches("A\\d{2}"), names_to = "SampleID", values_to = "count") %>%
+  group_by(SampleID) %>%
+  filter(count!=0) %>%
+  mutate(count_perc = count/sum(count),
+         log_count_perc = log(count_perc),
+         mult=count_perc*log_count_perc,
+         shannon = -sum(mult)) %>%
+  select(c(SampleID,shannon)) %>%
+  distinct
+
+plot_iv_data <- read_tsv("data/map_clean.tsv", show_col_types = FALSE) %>%
+  full_join(abundance_df, by = "SampleID") %>%
+  full_join(richness_df, by = "SampleID") %>%
+  full_join(shannon_df, by = "SampleID")
