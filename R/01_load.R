@@ -6,6 +6,7 @@ install.packages(setdiff(packages, rownames(installed.packages())))
 library(tidyverse)
 library(vegan)
 library(ggrepel)
+BiocManager::install("phyloseq")
 
 ## CFU counts file 
 
