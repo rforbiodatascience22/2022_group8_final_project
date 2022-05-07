@@ -4,13 +4,13 @@ library(patchwork)
 # Take data from the merged dataframe  
 heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   rename(Clostridiaceae=Clostridiaceae_1) %>%
-  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       # add a "family" and a "count" columns
+  pivot_longer(c(Ruminococcaceae,Enterobacteriaceae,Lachnospiraceae,                       
                  Bifidobacteriaceae,Clostridiaceae,Erysipelotrichaceae,
                  Bacteroidaceae,Coriobacteriaceae,Porphyromonadaceae,Enterococcaceae), 
                names_to = "family",
                values_to = "counts") %>%
-  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         # select the columns are going to be used 
-  mutate(family=fct_reorder(family,counts,sum)) %>%                                        # 
+  select(c(SampleID,Donor,Antibiotic,Name,Time,family,counts)) %>%                         
+  mutate(family=fct_reorder(family,counts,sum)) %>%                                         
   mutate(Antibiotic = case_when(Time == "0h" ~ "0h",
                                 Antibiotic == "none" ~ "AB free",
                                 Antibiotic == "Polymyxin" ~ "Poly",
@@ -19,7 +19,7 @@ heat_map_data <- read_tsv("data/otu_map_merged.tsv", show_col_types = FALSE) %>%
   group_by(SampleID) %>%
   mutate(counts_perc = 100*counts/sum(counts))
 
-#Create 3 separate plots, as we don't know how to make 2 nested facets
+# Create 3 separate plots, as we don't know how to make 2 nested facets
 h1 <- heat_map_data %>%
   filter(Donor==1) %>%
   ggplot(mapping = aes(Replicate, family)) +
@@ -87,7 +87,7 @@ h3 <- heat_map_data %>%
         panel.spacing = unit(0, "lines"),
         panel.grid.major = element_blank())
 
-#Merge plots with patchworks and save the final plot as .png
+# Merge plots with patchworks and save the final plot as .png
 heat_map <- h1 | h2 | h3
 
 ggsave("results/heatmap.png")
