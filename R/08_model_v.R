@@ -45,13 +45,3 @@ NMDS_plot
 ggsave("results/NMDS_plot.png")
 
 
-library("phyloseq"); packageVersion("phyloseq")
-library("plyr"); packageVersion("plyr")
-
-x<-ordinate(NMDS_oto_data, method = "NMDS", distance = "bray", trymax = 50)
-
-phyloseq_average(NMDS_oto_data)
-
-otu_mat <- NMDS_oto_data %>%
-  tibble::column_to_rownames("#OTU ID") 
-
