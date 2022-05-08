@@ -29,7 +29,8 @@ p3 <- ggplot(model_ii_data) +
 general_plot <- (p3 | (p1 / p2)) +   
   plot_annotation(
     title = "Focal strain growth by donor and treatment",
-    caption = "Data from blablabla",
+    caption = "Data from Andrew D. Letten. Human-associated microbiota
+    suppress invading bacteria even under disruption by antibiotics.",
     tag_levels = "A")
     
 ggsave("results/general_plot.png")  

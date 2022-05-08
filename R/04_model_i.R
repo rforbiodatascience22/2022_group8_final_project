@@ -99,7 +99,8 @@ h3 <- heat_map_data %>%
 heat_map <- h1 | h2 | h3 
 heat_map + plot_annotation(
   title = 'Community response to antibiotic treatments',
-  caption = 'Data obtained from https://doi.org/10.1038/s41396-021-00929-7.') &
+  caption = 'Andrew D. Letten, Data obtained from Human-associated microbiota
+  suppress invading bacteria even under disruption by antibiotics') &
   theme(plot.title = element_text(size = 10),
         axis.title = element_text(size = 8),
         plot.caption = element_text(size = 5))

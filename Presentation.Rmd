@@ -1,10 +1,10 @@
 ---
 title: "Group 8 final project"
-authors: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina Polls, Sergio Esteban Echeverría, Niels Jakob Larsen
+author: Enrique Martinez Diez, Bernat Godayol Farran, Paula Molina Polls, Sergio Esteban Echeverría, Niels Jakob Larsen
 date: March 22, 2005
 output:
   ioslides_presentation:
-    theme: cerulean
+    theme: journal
 editor_options: 
   markdown: 
     wrap: 72
@@ -18,7 +18,12 @@ body {
 text-align: justify}
 </style>
 
-## Introduction
+## Introduction | The study{#methods} 
+<style> 
+  #methods > p { 
+    margin-top: -50px; 
+  } 
+</style>
 
 <font size = "3"> It is known that the use of broad-spectrum antibiotics
 can promote the spread of resistant strains by competition. A previous
@@ -27,8 +32,8 @@ study by Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.
 coli* inoculated into human gut-microbiota populations within the
 presence and absence of rifampicin and polymyxin B. </font>
 
-```{r fig0, echo=FALSE, out.width="800x", fig.align="bottom"}
-knitr::include_graphics("presentation_figures/figure0.png")
+```{r fig0, echo=FALSE, out.width="700x", fig.align="bottom"}
+knitr::include_graphics("presentation_figures/methods.jpeg")
 ```
 
 ## Materials and methods
