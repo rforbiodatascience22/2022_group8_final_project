@@ -12,18 +12,19 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+
 ```{r setup, include=FALSE}
 library(knitr)
 library(kableExtra)
 ```
+
 
 <style>
 body {
 text-align: justify}
 </style>
 
-
-## Introduction | The study{#intro data-background=#FFFFFF}
+## Introduction | The study{#intro data-background="#FFFFFF"}
 <style> 
   #intro > p { 
     margin-top: -50px; 
@@ -35,16 +36,17 @@ can promote the spread of resistant strains by competition. A previous
 study by Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.
 (2021) analysed the competitive suppression of a resistant strain of *E.
 coli* inoculated into human gut-microbiota populations within the
-presence and absence of rifampicin and polymyxin B. </font>
+presence and absence of rifampicin and polymyxin B. </font> 
 <br>
 <br>
 ```{r fig0, echo=FALSE, out.width="600x", fig.align="center"}
 knitr::include_graphics("doc/methods.jpeg")
 ```
 
-## Materials and methods{data-background=#FFFFFF}
+## Materials and methods{data-background="#FFFFFF"}
 
-<font size = "3"> Data extracted from Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.(2021).</font>
+<font size = "3"> Data extracted from Letten, A.D., Baumgartner, M.,
+Pfrunder-Cardozo, K.R. et al.(2021).</font>
 <pre>
 
 </pre>
@@ -52,8 +54,9 @@ knitr::include_graphics("doc/methods.jpeg")
 knitr::include_graphics("doc/workflow.jpeg")
 ```
 
-## Tidying the data{.small data-background=#FFFFFF}
-- *CFU Raw file*
+## Tidying the data{.small data-background="#FFFFFF"}
+
+-   *CFU Raw file*
 ```{r, echo = FALSE, message = FALSE}
 kableExtra::kable(cfu_df[1:3,], "html") %>%
   kable_styling(bootstrap_options = "striped", font_size = 12, full_width = FALSE)
@@ -61,14 +64,16 @@ kableExtra::kable(cfu_df[1:3,], "html") %>%
 <pre>
 
 </pre>
-- *CFU Tidy file*
+
+-   *CFU Tidy file*
 ```{r, echo = FALSE, message = FALSE}
 kableExtra::kable(cfu_df_clean[1:3,], "html") %>%
   kable_styling(bootstrap_options = "striped", font_size = 12, full_width = FALSE)
 ```
 
-## Tidying the data{.small data-background=#FFFFFF}
-- *OTU Raw file*
+## Tidying the data{.small data-background="#FFFFFF"}
+
+-   *OTU Raw file*
 ```{r, echo = FALSE, message = FALSE}
 otu_table <- otu_df %>% 
   select(`#OTU ID`,A01,A30,"Consensus Lineage")
@@ -78,7 +83,8 @@ kableExtra::kable(otu_table[1:3,], "html") %>%
 <pre>
 
 </pre>
-- *OTU Tidy file*
+-   *OTU Tidy file*
+
 ```{r, echo = FALSE, message = FALSE}
 otu_clean_table <- otu_df_clean %>% 
   select(OTU,A01,A30,realm,phylum,class,order,family,genus)
@@ -86,8 +92,9 @@ kableExtra::kable(otu_clean_table[1:3,], "html") %>%
   kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
 ```
 
-## Tidying the data{.small data-background=#FFFFFF}
-- *MAP Raw file*
+## Tidying the data{.small data-background="#FFFFFF"}
+
+-   *MAP Raw file*
 ```{r, echo = FALSE, message = FALSE}
 map_table <- map_df %>% 
   select(SampleID, PrimerSequenceForward, Donor, Antibiotic, Name)
@@ -97,14 +104,14 @@ kableExtra::kable(map_table[1:3,], "html") %>%
 <pre>
 
 </pre>
-- *MAP Tidy file*
+-   *MAP Tidy file*
 ```{r, echo = FALSE, message = FALSE}
 kableExtra::kable(map_df_clean[1:3,], "html") %>%
   kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
 ```
 
+## Data visualization | General visualisation{#general data-background="#FFFFFF"}
 
-## Data visualization | General visualisation{#general data-background=#FFFFFF}
 <style> 
   #general > p { 
     margin-top: -30px; 
@@ -114,7 +121,8 @@ kableExtra::kable(map_df_clean[1:3,], "html") %>%
 knitr::include_graphics("results/general_plot.png")
 ```
 
-## Data visualization | Violin plot{#violin data-background=#FFFFFF}
+## Data visualization | Violin plot{#violin data-background="#FFFFFF"}
+
 <style> 
   #violin > p { 
     margin-top: -60px; 
@@ -124,7 +132,8 @@ knitr::include_graphics("results/general_plot.png")
 knitr::include_graphics("results/Ab_Ri_Sh.png")
 ```
 
-## Data visualization | Heatmap{#heatmap data-background=#FFFFFF}
+## Data visualization | Heatmap{#heatmap data-background="#FFFFFF"}
+
 <style> 
   #heatmap > p { 
     margin-top: -30px; 
@@ -134,25 +143,25 @@ knitr::include_graphics("results/Ab_Ri_Sh.png")
 knitr::include_graphics("results/heatmap.png")
 ```
 
-## Data visualization | Cluster plot{#cluster data-background=#FFFFFF}
+## Data visualization | Cluster plot{#cluster data-background="#FFFFFF"}
+
 <style> 
   #cluster > p { 
     margin-top: -30px; 
   } 
 </style>
+
 ```{r fig5, echo=FALSE, out.width="700px", fig.align="center"}
 knitr::include_graphics("results/NMDS_plot.png")
 ```
 
-## Data visualization | Violin plot by community{#community data-background=#FFFFFF}
+## Data visualization - Conclusion | Violin plot by community{#community data-background="#FFFFFF"}
+
 <style> 
   #community > p { 
     margin-top: -30px; 
   } 
 </style>
-
 ```{r fig4, echo=FALSE, out.width="600px", fig.align="center"}
 knitr::include_graphics("results/violin_1_A.png")
 ```
-
-
