@@ -1,8 +1,8 @@
-# Reading originale data for NMDS analysis.
+# Reading original data for NMDS analysis.
 NMDS_oto_data <- read_tsv("data/otu.tsv")
 NMDS_map <- read_tsv("data/map.tsv")
 
-# Normalizes data (relative abundances) and wrangles data
+# Normalizes data to (relative abundances) and wrangles data
 NMDS_oto_normalized <- NMDS_oto_data %>%
   select(-"Consensus Lineage") %>%
   mutate_at(vars(-`#OTU ID`), funs(./sum(.)*100)) %>%  
@@ -45,8 +45,8 @@ NMDS_plot <- ggplot(data = NMDS_values,
         panel.background = element_blank(),
         panel.border = element_rect(colour = "black", fill=NA))
   
-  
+# Illustrating plot:  
 NMDS_plot
 
-
+# Saving plot
 ggsave("results/NMDS_plot.png")
