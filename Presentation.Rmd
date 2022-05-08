@@ -13,6 +13,8 @@ editor_options:
 ---
 ```{r setup, include=FALSE}
 source(file = "/cloud/project/R/00_doit.R")
+library(knitr)
+library(kableExtra)
 ```
 
 <style>
@@ -21,11 +23,6 @@ text-align: justify}
 </style>
 
 ## Introduction | The study{#methods} 
-<style> 
-  #methods > p { 
-    margin-top: -50px; 
-  } 
-</style>
 
 <font size = "3"> It is known that the use of broad-spectrum antibiotics
 can promote the spread of resistant strains by competition. A previous
@@ -34,34 +31,69 @@ study by Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.
 coli* inoculated into human gut-microbiota populations within the
 presence and absence of rifampicin and polymyxin B. </font>
 
-
-```{r fig0, echo=FALSE, out.width="600x", fig.align="bottom"}
-
-
-
+```{r fig0, echo=FALSE, out.width="600x", fig.align="center"}
 knitr::include_graphics("doc/methods.jpeg")
 ```
 
 ## Materials and methods
 
 <font size = "3"> Data extracted from Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.(2021).</font>
+<pre>
 
+</pre>
 ```{r fig1, echo=FALSE, out.width="700x", fig.align="center"}
 knitr::include_graphics("doc/workflow.jpeg")
 ```
 
-## Raw files
-- *CFU file*
+## Tidying the data{.small}
+- *CFU Raw file*
 ```{r, echo = FALSE, message = FALSE}
-cfu_df[1:3,]
+kableExtra::kable(cfu_df[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 12, full_width = FALSE)
 ```
-- *OTU file*
+<pre>
+
+</pre>
+- *CFU Tidy file*
 ```{r, echo = FALSE, message = FALSE}
-otu_df[1:3,]
+kableExtra::kable(cfu_df_clean[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 12, full_width = FALSE)
 ```
-- *Map file*
+
+## Tidying the data{.small}
+- *OTU Raw file*
 ```{r, echo = FALSE, message = FALSE}
-map_df[1:3,]
+otu_table <- otu_df %>% 
+  select(`#OTU ID`,A01,A30,"Consensus Lineage")
+kableExtra::kable(otu_table[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
+```
+<pre>
+
+</pre>
+- *OTU Tidy file*
+```{r, echo = FALSE, message = FALSE}
+otu_clean_table <- otu_df_clean %>% 
+  select(OTU,A01,A30,realm,phylum,class,order,family,genus)
+kableExtra::kable(otu_clean_table[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
+```
+
+## Tidying the data{.small}
+- *MAP Raw file*
+```{r, echo = FALSE, message = FALSE}
+map_table <- map_df %>% 
+  select(SampleID, PrimerSequenceForward, Donor, Antibiotic, Name)
+kableExtra::kable(map_table[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
+```
+<pre>
+
+</pre>
+- *MAP Tidy file*
+```{r, echo = FALSE, message = FALSE}
+kableExtra::kable(map_df_clean[1:3,], "html") %>%
+  kable_styling(bootstrap_options = "striped", font_size = 10, full_width = FALSE)
 ```
 
 ## Tidying the data
