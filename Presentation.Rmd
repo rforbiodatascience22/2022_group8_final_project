@@ -114,6 +114,16 @@ kableExtra::kable(map_df_clean[1:3,], "html") %>%
 knitr::include_graphics("results/general_plot.png")
 ```
 
+## Data visualization | Violin plot{#violin data-background=#FFFFFF}
+<style> 
+  #violin > p { 
+    margin-top: -60px; 
+  } 
+</style>
+```{r fig6, echo=FALSE, out.width="550px", fig.align="center"}
+knitr::include_graphics("results/Ab_Ri_Sh.png")
+```
+
 ## Data visualization | Heatmap{#heatmap data-background=#FFFFFF}
 <style> 
   #heatmap > p { 
@@ -122,6 +132,16 @@ knitr::include_graphics("results/general_plot.png")
 </style>
 ```{r fig3, echo=FALSE, out.width="800px", fig.align="center"}
 knitr::include_graphics("results/heatmap.png")
+```
+
+## Data visualization | Cluster plot{#cluster data-background=#FFFFFF}
+<style> 
+  #cluster > p { 
+    margin-top: -30px; 
+  } 
+</style>
+```{r fig5, echo=FALSE, out.width="700px", fig.align="center"}
+knitr::include_graphics("results/NMDS_plot.png")
 ```
 
 ## Data visualization | Violin plot by community{#community data-background=#FFFFFF}
@@ -135,22 +155,4 @@ knitr::include_graphics("results/heatmap.png")
 knitr::include_graphics("results/violin_1_A.png")
 ```
 
-## Data visualization | Cluster plot{#cluster data-background=#FFFFFF}
-<style> 
-  #cluster > p { 
-    margin-top: -30px; 
-  } 
-</style>
-```{r fig5, echo=FALSE, out.width="700px", fig.align="center"}
-knitr::include_graphics("results/NMDS_plot.png")
-```
 
-## Data visualization | Violin plot{#violin data-background=#FFFFFF}
-<style> 
-  #violin > p { 
-    margin-top: -60px; 
-  } 
-</style>
-```{r fig6, echo=FALSE, out.width="550px", fig.align="center"}
-knitr::include_graphics("results/Ab_Ri_Sh.png")
-```
