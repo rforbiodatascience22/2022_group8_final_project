@@ -3,7 +3,7 @@ library(patchwork)
 library(scales)
 
 model_ii_data <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>% 
-  select(!c(plateID, Replicate, Dilution))
+  select(-c(plateID, Replicate, Dilution))
 
 
 p1 <- ggplot(model_ii_data, 
@@ -41,25 +41,17 @@ p3 <- ggplot(model_ii_data) +
                          y = cfu_ml), 
            stat = "identity") +
   theme(panel.grid.major = element_blank(),
-        panel.grid.minor =  element_blank(),
+        panel.grid.minor = element_blank(),
         panel.background = element_blank()) +
-  facet_wrap(~Donor) + 
-  theme_minimal()+
-  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                labels = trans_format("log10", math_format(10^.x)))
+  facet_wrap(~Donor) +
+  theme_minimal()
 
-general_plot <- (p3 | (p1 / p2)) +   
+general_plot <- (p3 | (p1 / p2)) +
   plot_annotation(
-<<<<<<< HEAD
     title = "Focal strain growth",
     subtitle = "Figures showing different E. coli counts by treatment and donor",
     caption = "Data from Letten, A. et al. 2021",
-=======
-    title = "Focal strain growth by donor and treatment",
-    caption = "Data from Andrew D. Letten. Human-associated microbiota
-    suppress invading bacteria even under disruption by antibiotics.",
->>>>>>> 9a8cdb3abf91873318d22f69d03915917f8442b1
     tag_levels = "A")
-  
+
 general_plot  
-ggsave("results/general_plot.png")  
+ggsave("results/general_plot.png", width = 20, height = 12, units = "cm")
