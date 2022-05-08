@@ -37,8 +37,15 @@ NMDS_plot <- ggplot(data = NMDS_values,
            y = MDS2, 
            shape = factor(Donor),
            color = treatment)) +
-  geom_point(size=1.25, alpha= 0.5) 
-
+  geom_point(colour = 'black', alpha = 1, size = 2.5) +
+  geom_point(alpha = 1, size = 1.8) +
+  theme(axis.title.x = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(colour = "black", fill=NA))
+  
+  
 NMDS_plot
 
 
