@@ -1,5 +1,5 @@
 # Checking and installing needed libraries:
-packages <- c("tidyverse", "vegan", "ggrepel", "BiocManager", "scales")
+packages <- c("tidyverse", "vegan", "ggrepel", "BiocManager", "scales", "patchwork")
 install.packages(setdiff(packages, rownames(installed.packages()))) 
 
 # Loading libraries 
@@ -8,7 +8,8 @@ library(vegan)
 library(ggrepel)
 library(BiocManager)
 library(scales)
-BiocManager::install("phyloseq")
+library(patchwork)
+# BiocManager::install("phyloseq")
 
 ## CFU counts file 
 
