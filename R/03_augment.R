@@ -1,3 +1,5 @@
+library(tidyverse)
+
 ## Create merged (OTU counts and mapfile) dataframe
 merged_df <- read_tsv("data/otu_clean.tsv", show_col_types = FALSE) %>%
   select(c(matches("A\\d{2}"),family)) %>%

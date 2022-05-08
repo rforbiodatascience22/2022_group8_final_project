@@ -1,5 +1,7 @@
+library(tidyverse)
 library(scales)
 
+#Load and wrangle data
 violin_1_A_data <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
   select(c(Donor, Community, Antibiotic, Replicate, cfu_ml)) %>%
   mutate(cfu_ml = na_if(cfu_ml, 0) ) %>%
@@ -9,7 +11,7 @@ violin_1_A_data <- read_tsv("data/cfu_clean.tsv", show_col_types = FALSE) %>%
                              "-" = "No Treatment")) %>%
   drop_na()
 
-
+#Plotting
 violin_1_A <- ggplot(data = violin_1_A_data,
        mapping = aes(x = Antibiotic,
                      y = cfu_ml)) +
@@ -28,7 +30,7 @@ violin_1_A <- ggplot(data = violin_1_A_data,
   scale_y_log10(labels = trans_format("log10", math_format(10^.x))) +
   labs(title = "Focal strain Abundance",
        subtitle = "Effect of community, donor and antibiotic.",
-       caption = "Andrew D. Letten,Human-associated microbiota
+       caption = "Andrew D. Letten, Human-associated microbiota
        suppress invading bacteria even under disruption by antibiotics",
        shape = "Donor",
        x = "Treatment",

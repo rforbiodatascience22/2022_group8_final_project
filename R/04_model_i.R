@@ -42,7 +42,7 @@ h1 <- heat_map_data %>%
         legend.position = "none",
         panel.spacing = unit(0, "lines"),
         panel.grid.major = element_blank(),
-        strip.text = element_text(size = 6))
+        strip.text = element_text(size = 8))
 
 h2 <- heat_map_data %>%
   filter(Donor==2) %>%
@@ -66,7 +66,7 @@ h2 <- heat_map_data %>%
         panel.spacing = unit(0, "lines"),
         plot.margin = margin(r=0, l=0),
         panel.grid.major = element_blank(),
-        strip.text = element_text(size = 6))
+        strip.text = element_text(size = 8))
 
 h3 <- heat_map_data %>%
   filter(Donor==3) %>%
@@ -89,19 +89,18 @@ h3 <- heat_map_data %>%
         axis.text.y=element_blank(),
         panel.spacing = unit(0, "lines"),
         panel.grid.major = element_blank(),
-        strip.text = element_text(size = 6),
-        legend.title = element_text(size=8), #change legend title font size
-        legend.text = element_text(size=8),
-        strip.text.y = element_text(size = 6)) #change legend text font size)
+        strip.text = element_text(size = 8),
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 8))
 
 # Merge plots with patchworks and save the final plot as .png
 heat_map <- h1 | h2 | h3
 heat_map + plot_annotation(
   title = 'Community response to antibiotic treatments',
-  caption = 'Andrew D. Letten, Data obtained from Human-associated microbiota
+  caption = 'Andrew D. Letten, Human-associated microbiota
   suppress invading bacteria even under disruption by antibiotics') &
   theme(plot.title = element_text(size = 10),
         axis.title = element_text(size = 8),
-        plot.caption = element_text(size = 5))
+        plot.caption = element_text(size = 8))
 
 ggsave("results/heatmap.png", width = 20, height = 12, units = "cm")

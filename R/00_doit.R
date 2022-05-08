@@ -1,3 +1,10 @@
+## Checking and installing needed libraries:
+#packages_requirements <- c("tidyverse", "vegan", "ggrepel", "BiocManager", "scales", "patchwork")
+#install.packages(setdiff(packages_requirements, rownames(installed.packages())))
+
+#library(BiocManager)
+#BiocManager::install("phyloseq") #Installation of phyloseq by the BiocManager package
+
 # Run all scripts ---------------------------------------------------------
 source("R/01_load.R")
 source("R/02_clean.R")

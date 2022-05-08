@@ -1,3 +1,5 @@
+library(tidyverse)
+
 ## Clean CFU counts dataframe
 cfu_df_clean <- read_tsv("data/cfu.tsv", show_col_types = FALSE) %>%
   separate(Treatment, c("Donor","Community","Antibiotic"), sep="[CA]") %>%

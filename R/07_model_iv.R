@@ -1,5 +1,5 @@
+library(tidyverse)
 library(phyloseq)
-library(patchwork)
 
 model_iv_data <- read_tsv("data/otu_clean.tsv", show_col_types = FALSE) %>%
   select(matches("A\\d{2}"))
@@ -12,10 +12,10 @@ abundance_df <- model_iv_data %>%
   select(c(SampleID, Abundance)) %>%
   distinct
   
-# Calculate richness with phyloseq package (requires to turn to base R for 3 lines)
+# Calculate richness with phyloseq package (requires to work in base R for 3 lines)
 richness_df <- model_iv_data %>%
   as.matrix %>%
-  otu_table(T) %>%
+  otu_table(TRUE) %>%
   estimate_richness(measures=c("Observed")) %>%
   as_tibble(rownames = "SampleID") %>%
   rename(Richness=Observed)
@@ -67,7 +67,7 @@ combi_violins_plot <- plot_iv_data %>%
                            color = Treatment),
              position = position_dodge(width = 0.4)) +
   labs(y = "Diversity / Richness / Abundance",
-       caption = "Andrew D. Letten,Human-associated microbiota
+       caption = "Andrew D. Letten, Human-associated microbiota
        suppress invading bacteria even under disruption by antibiotics") +
   scale_fill_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))+ 
   scale_colour_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3")) +
