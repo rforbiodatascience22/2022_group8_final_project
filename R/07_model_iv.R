@@ -6,7 +6,7 @@ model_iv_data <- read_tsv("data/otu.tsv", show_col_types = FALSE) %>%
   rowwise() %>%
   filter(sum(across(matches("A\\d{2}")))>=5)
 
-#Calculate abundance
+# Calculate abundance
 abundance_df <- model_iv_data %>%
   pivot_longer(matches("A\\d{2}"), names_to = "SampleID", values_to = "count") %>%
   group_by(SampleID) %>%
@@ -15,7 +15,7 @@ abundance_df <- model_iv_data %>%
   distinct
   
 
-#Calculate richness with phyloseq package (requires to turn to base R for 3 lines)
+# Calculate richness with phyloseq package (requires to turn to base R for 3 lines)
 richness_df <- model_iv_data %>%
   as.matrix %>%
   otu_table(T) %>%
@@ -24,7 +24,7 @@ richness_df <- model_iv_data %>%
   rename(richness=Observed)
 
 
-#Calculate Shannon Index
+# Calculate Shannon Index
 shannon_df <- model_iv_data %>%
   pivot_longer(matches("A\\d{2}"), names_to = "SampleID", values_to = "count") %>%
   group_by(SampleID) %>%
@@ -50,16 +50,23 @@ plot_iv_data
 
 
 # Plotting violin plots for richness abundance and Shannon index
-#Abundance
+
+# Abundance
 abundance_plot <- plot_iv_data %>%
   select(c(abundance, treatment, Donor)) %>% 
   ggplot(mapping = aes(x = treatment,
                      y = abundance)) +
-  geom_violin(mapping = aes(fill = treatment)) +
+  geom_violin(mapping = aes(fill = treatment),
+              alpha = 0.5) +
   geom_point(mapping = aes(shape = factor(Donor),
                            group = Donor),
+             color = "black",
+             size = 2.5,
              position = position_dodge(width = 0.4)) +
-  labs(y = "Abundance") +
+  geom_point(mapping = aes(shape = factor(Donor),
+                           group = Donor,
+                           color = treatment),
+             position = position_dodge(width = 0.4)) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title = element_blank(),
         panel.grid.major = element_blank(),
@@ -69,7 +76,9 @@ abundance_plot <- plot_iv_data %>%
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
         legend.position = "none") +
-  labs(title = "Abundance")
+  labs(title = "Abundance (Cell count)") +
+  scale_fill_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))+ 
+  scale_colour_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))
         
 # Richness
 
@@ -77,11 +86,17 @@ richness_plot <- plot_iv_data %>%
   select(c(richness, treatment, Donor)) %>%  
   ggplot(mapping = aes(x = treatment,
                        y = richness)) +
-  geom_violin(mapping = aes(fill = treatment)) +
+  geom_violin(mapping = aes(fill = treatment),
+              alpha = 0.5) +
   geom_point(mapping = aes(shape = factor(Donor),
                            group = Donor),
+             color = "black",
+             size = 2.5,
              position = position_dodge(width = 0.4)) +
-  labs(y = "Richness") +
+  geom_point(mapping = aes(shape = factor(Donor),
+                           group = Donor,
+                           color = treatment),
+             position = position_dodge(width = 0.4)) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title = element_blank(),
         panel.grid.major = element_blank(),
@@ -91,7 +106,9 @@ richness_plot <- plot_iv_data %>%
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
         legend.position = "none") +
-  labs(title = "Richness")
+  labs(title = "Richness")+
+  scale_fill_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))+ 
+  scale_colour_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))
 
 # Shannon index
 
@@ -99,9 +116,16 @@ shannon_plot <- plot_iv_data %>%
   select(c(shannon, treatment, Donor)) %>% 
   ggplot(mapping = aes(x = treatment,
                        y = shannon)) +
-  geom_violin(mapping = aes(fill = treatment)) +
+  geom_violin(mapping = aes(fill = treatment),
+              alpha = 0.5) +
   geom_point(mapping = aes(shape = factor(Donor),
                            group = Donor),
+             colour = "black",
+             size = 2.5,
+             position = position_dodge(width = 0.4)) +
+  geom_point(mapping = aes(shape = factor(Donor),
+                           group = Donor,
+                           colour = treatment),
              position = position_dodge(width = 0.4)) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.title = element_blank(),
@@ -110,10 +134,18 @@ shannon_plot <- plot_iv_data %>%
         panel.background = element_blank(),
         axis.line = element_line(),
         legend.position = "none") +
-  labs(title = "Shannon")
+  labs(title = "Shannon") +
+  scale_fill_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))+ 
+  scale_colour_manual(values = c("grey66", "#56B4E9", "#E69F00", "seagreen3"))
 
-# Combining plots
+# Combining plots using Patchwork
 
 combined_violins <- abundance_plot / richness_plot / shannon_plot +
-  plot_layout(guides = "collect")
-combined_violins
+  plot_layout(guides = "collect") +
+  plot_annotation(caption = "Andrew D. Letten,Human-associated microbiota
+       suppress invading bacteria even under disruption by antibiotics")&
+  theme(plot.caption = element_text(size = 5))
+
+ggsave("results/Ab_Ri_Di.png", width = 13, height = 14, units = "cm")
+
+
