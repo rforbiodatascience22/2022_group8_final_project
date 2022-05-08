@@ -29,6 +29,8 @@ violin_1_A <- ggplot(data = violin_1_A_data,
                 labels = trans_format("log10", math_format(10^.x))) +
   labs(title = "Focal strain Abundance",
        subtitle = "Effect of community, donor and antibiotic.",
+       caption = "Andrew D. Letten,Human-associated microbiota
+       suppress invading bacteria even under disruption by antibiotics",
        shape = "Donor",
        x = "Treatment",
        y = "Abundance (CFU mL-1)")

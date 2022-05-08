@@ -1,8 +1,8 @@
-# Reading originale data for NMDS analysis.
+# Reading original data for NMDS analysis.
 NMDS_oto_data <- read_tsv("data/otu.tsv")
 NMDS_map <- read_tsv("data/map.tsv")
 
-# Normalizes data (relative abundances) and wrangles data
+# Normalizes data to (relative abundances) and wrangles data
 NMDS_oto_normalized <- NMDS_oto_data %>%
   select(-"Consensus Lineage") %>%
   mutate_at(vars(-`#OTU ID`), funs(./sum(.)*100)) %>%  
@@ -37,9 +37,16 @@ NMDS_plot <- ggplot(data = NMDS_values,
            y = MDS2, 
            shape = factor(Donor),
            color = treatment)) +
-  geom_point(size=1.25, alpha= 0.5) 
-
+  geom_point(colour = 'black', alpha = 1, size = 2.5) +
+  geom_point(alpha = 1, size = 1.8) +
+  theme(axis.title.x = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_rect(colour = "black", fill=NA))
+  
+# Illustrating plot:  
 NMDS_plot
 
-
+# Saving plot
 ggsave("results/NMDS_plot.png")

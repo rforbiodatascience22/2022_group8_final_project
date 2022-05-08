@@ -50,9 +50,15 @@ p3 <- ggplot(model_ii_data) +
 
 general_plot <- (p3 | (p1 / p2)) +   
   plot_annotation(
+<<<<<<< HEAD
     title = "Focal strain growth",
     subtitle = "Figures showing different E. coli counts by treatment and donor",
     caption = "Data from Letten, A. et al. 2021",
+=======
+    title = "Focal strain growth by donor and treatment",
+    caption = "Data from Andrew D. Letten. Human-associated microbiota
+    suppress invading bacteria even under disruption by antibiotics.",
+>>>>>>> 9a8cdb3abf91873318d22f69d03915917f8442b1
     tag_levels = "A")
   
 general_plot  
