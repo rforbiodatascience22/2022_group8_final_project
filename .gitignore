@@ -2,6 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-data/*
-results/*
+data/
+results/
 Presentation.html
