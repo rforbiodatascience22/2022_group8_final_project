@@ -1,15 +1,15 @@
-# Reading original data for NMDS analysis.
-NMDS_oto_data <- read_tsv("data/otu.tsv")
-NMDS_map <- read_tsv("data/map.tsv")
+# Reading data
+NMDS_otu_data <- read_tsv("data/otu_clean.tsv", show_col_types = FALSE)
+NMDS_map <- read_tsv("data/map_clean.tsv", show_col_types = FALSE)
 
-# Normalizes data to (relative abundances) and wrangles data
-NMDS_oto_normalized <- NMDS_oto_data %>%
-  select(-"Consensus Lineage") %>%
-  mutate_at(vars(-`#OTU ID`), funs(./sum(.)*100)) %>%  
-  # . = all data points. 
+# Normalize data to (relative abundances) and wrangle data
+NMDS_otu_normalized <- NMDS_oto_data %>%
+  select(OTU, matches("A\\d{2}")) %>%
+  mutate_at(vars(-OTU), funs(./sum(.)*100)) %>%  
+  # . = all data points
   # => Mutate all data (except OTU ID) with funs() finding relative abundances
   gather(SampleID, abundance, `A01`:`A30`) %>%
-  spread(key = `#OTU ID`,value = 'abundance') %>%
+  spread(key = OTU, value = 'abundance') %>%
   right_join(NMDS_map %>% 
                select(SampleID)) %>%
   column_to_rownames("SampleID")
@@ -26,27 +26,27 @@ NMDS_analysis <- NMDS_oto_normalized %>%
 NMDS_values <- NMDS_analysis[["points"]] %>%
   as_tibble(rownames = "SampleID") %>%
   left_join(NMDS_map) %>%
-  mutate(treatment = case_when(Name %in% c("Rifampicin 1", "Rifampicin 2", "Rifampicin 3") ~ "Rifampicin",
-                               Name %in% c("Polymyxin 1","Polymyxin 2","Polymyxin 3") ~"Polymyxin",
-                               Name %in% c("None 1", "None 2", "None 3") ~ "AB free",
-                               Name %in% c("Inoculum") ~ "Inoculum"))
-
+  mutate(Treatment = case_when(Treatment=="None" ~ "AB free",
+                               TRUE ~ Treatment),
+         Treatment = fct_relevel(Treatment,
+                                 "Inoculum",
+                                 "AB free",
+                                 "Polymyxin",
+                                 "Rifampicin"))
+  
 # Plotting the NMDS values:
 NMDS_plot <- ggplot(data = NMDS_values,
        aes(x = MDS1, 
            y = MDS2, 
            shape = factor(Donor),
-           color = treatment)) +
-  geom_point(colour = 'black', alpha = 1, size = 2.5) +
-  geom_point(alpha = 1, size = 1.8) +
-  theme(axis.title.x = element_blank(),
-        panel.grid.major = element_blank(),
+           color = Treatment)) +
+  geom_point(colour = 'black', alpha = 1, size = 2.8) +
+  geom_point(alpha = 1, size = 2.1) +
+  labs(shape = "Donor") +
+  theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         panel.border = element_rect(colour = "black", fill=NA))
-  
-# Illustrating plot:  
-NMDS_plot
 
 # Saving plot
-ggsave("results/NMDS_plot.png")
+ggsave("results/NMDS_plot.png", width = 15, height = 10, units = "cm")
