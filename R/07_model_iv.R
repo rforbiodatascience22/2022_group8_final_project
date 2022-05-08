@@ -60,17 +60,19 @@ abundance_plot <- plot_iv_data %>%
                            group = Donor),
              position = position_dodge(width = 0.4)) +
   labs(y = "Abundance") +
-  theme(axis.title.x = element_blank(),
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line.y = element_line(),
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
-        legend.position = "none")
+        legend.position = "none") +
+  labs(title = "Richness")
         
-abundance_plot
 # Richness
+
 richness_plot <- plot_iv_data %>%
   select(c(richness, treatment, Donor)) %>%  
   ggplot(mapping = aes(x = treatment,
@@ -80,16 +82,19 @@ richness_plot <- plot_iv_data %>%
                            group = Donor),
              position = position_dodge(width = 0.4)) +
   labs(y = "Richness") +
-  theme(axis.title.x = element_blank(),
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line.y = element_line(),
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
-        legend.position = "none")
-richness_plot
+        legend.position = "none") +
+  labs(title = "Abundance")
+
 # Shannon index
+
 shannon_plot <- plot_iv_data %>%
   select(c(shannon, treatment, Donor)) %>%  
   ggplot(mapping = aes(x = treatment,
@@ -98,13 +103,14 @@ shannon_plot <- plot_iv_data %>%
   geom_point(mapping = aes(shape = factor(Donor),
                            group = Donor),
              position = position_dodge(width = 0.4)) +
-  theme(panel.grid.major = element_blank(),
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_blank(),
+        panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
         axis.line = element_line(),
         legend.position = "none") +
-  labs(y = "Shannon")
-shannon_plot
+  labs(title = "Shannon")
 
 # Combining plots
 
