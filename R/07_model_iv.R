@@ -43,7 +43,8 @@ plot_iv_data <- read_tsv("data/map_clean.tsv", show_col_types = FALSE) %>%
   mutate(treatment = case_when(Name %in% c("Rifampicin 1", "Rifampicin 2", "Rifampicin 3") ~ "Rifampicin",
                                Name %in% c("Polymyxin 1","Polymyxin 2","Polymyxin 3") ~"Polymyxin",
                                Name %in% c("None 1", "None 2", "None 3") ~ "AB free",
-                               Name %in% c("Inoculum") ~ "Inoculum"))
+                               Name %in% c("Inoculum") ~ "Inoculum"),
+         treatment = fct_relevel(treatment, "Inoculum", "AB free", "Polymyxin", "Rifampicin"))
   
 plot_iv_data
 
@@ -52,7 +53,6 @@ plot_iv_data
 #Abundance
 abundance_plot <- plot_iv_data %>%
   select(c(abundance, treatment, Donor)) %>% 
-  #filter(treatment != "Inoculum") %>% 
   ggplot(mapping = aes(x = treatment,
                      y = abundance)) +
   geom_violin(mapping = aes(fill = treatment)) +
@@ -69,7 +69,7 @@ abundance_plot <- plot_iv_data %>%
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
         legend.position = "none") +
-  labs(title = "Richness")
+  labs(title = "Abundance")
         
 # Richness
 
@@ -91,12 +91,12 @@ richness_plot <- plot_iv_data %>%
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank(),
         legend.position = "none") +
-  labs(title = "Abundance")
+  labs(title = "Richness")
 
 # Shannon index
 
 shannon_plot <- plot_iv_data %>%
-  select(c(shannon, treatment, Donor)) %>%  
+  select(c(shannon, treatment, Donor)) %>% 
   ggplot(mapping = aes(x = treatment,
                        y = shannon)) +
   geom_violin(mapping = aes(fill = treatment)) +
@@ -104,7 +104,7 @@ shannon_plot <- plot_iv_data %>%
                            group = Donor),
              position = position_dodge(width = 0.4)) +
   theme(plot.title = element_text(hjust = 0.5),
-        axis.title.x = element_blank(),
+        axis.title = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.background = element_blank(),
