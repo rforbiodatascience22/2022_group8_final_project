@@ -36,7 +36,7 @@ presence and absence of rifampicin and polymyxin B. </font>
 
 
 ```{r fig0, echo=FALSE, out.width="600x", fig.align="bottom"}
-knitr::include_graphics("presentation_figures/methods.jpeg")
+knitr::include_graphics("doc/methods.jpeg")
 ```
 
 ## Materials and methods
@@ -44,7 +44,7 @@ knitr::include_graphics("presentation_figures/methods.jpeg")
 <font size = "3"> This project used the data extracted from Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.(2021).</font>
 
 ```{r fig1, echo=FALSE, out.width="700x", fig.align="center"}
-knitr::include_graphics("presentation_figures/workflow.jpeg")
+knitr::include_graphics("doc/workflow.jpeg")
 ```
 
 ## CFU file
