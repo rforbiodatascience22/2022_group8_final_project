@@ -78,4 +78,4 @@ combi_violins_plot <- plot_iv_data %>%
         strip.text = element_text(size=12),
         strip.background = element_blank())
 
-ggsave("results/Ab_Ri_Sh.png", width = 13, height = 14, units = "cm")
+ggsave("results/Ab_Ri_Sh.png", width = 15, height = 14, units = "cm")

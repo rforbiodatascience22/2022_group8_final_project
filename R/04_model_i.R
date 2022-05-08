@@ -99,7 +99,7 @@ heat_map + plot_annotation(
   title = 'Community response to antibiotic treatments',
   caption = 'Andrew D. Letten, Human-associated microbiota
   suppress invading bacteria even under disruption by antibiotics') &
-  theme(plot.title = element_text(size = 10),
+  theme(plot.title = element_text(size = 13),
         axis.title = element_text(size = 8),
         plot.caption = element_text(size = 8))
 
