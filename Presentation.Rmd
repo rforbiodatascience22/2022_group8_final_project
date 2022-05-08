@@ -36,40 +36,35 @@ presence and absence of rifampicin and polymyxin B. </font>
 
 
 ```{r fig0, echo=FALSE, out.width="600x", fig.align="bottom"}
+
+
+
 knitr::include_graphics("doc/methods.jpeg")
 ```
 
 ## Materials and methods
 
-<font size = "3"> This project used the data extracted from Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.(2021).</font>
+<font size = "3"> Data extracted from Letten, A.D., Baumgartner, M., Pfrunder-Cardozo, K.R. et al.(2021).</font>
 
 ```{r fig1, echo=FALSE, out.width="700x", fig.align="center"}
 knitr::include_graphics("doc/workflow.jpeg")
 ```
 
-## CFU file
-
+## Raw files
+- *CFU file*
 ```{r, echo = FALSE, message = FALSE}
-cfu_df
+cfu_df[1:3,]
+```
+- *OTU file*
+```{r, echo = FALSE, message = FALSE}
+otu_df[1:3,]
+```
+- *Map file*
+```{r, echo = FALSE, message = FALSE}
+map_df[1:3,]
 ```
 
-
-## MAPFILE
-
-```{r, echo = FALSE, message = FALSE}
-map_df
-```
-
---- 
--   *otufile*
-
-```{r, echo = FALSE, message = FALSE}
-otu_df
-```
-
-
-
-### Tidying the data
+## Tidying the data
 
 -  *cfu_counts*
 
