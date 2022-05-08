@@ -2,7 +2,7 @@
 cfu_df_clean <- read_tsv("data/cfu.tsv", show_col_types = FALSE) %>%
   separate(Treatment, c("Donor","Community","Antibiotic"), sep="[CA]") %>%
   mutate(Donor = str_remove(Donor, "D")) %>%
-  select(-total_cfu,Dilution) %>%
+  select(-c(total_cfu,Dilution)) %>%
   rename(cfu_ml = per_ml)
 # Write tsv file
 write_tsv(cfu_df_clean, file='data/cfu_clean.tsv')
